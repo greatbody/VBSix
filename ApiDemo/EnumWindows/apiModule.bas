@@ -6,17 +6,21 @@ Public Const GW_OWNER = 4
 Public Declare Function GetWindow Lib "user32" (ByVal hwnd As Long, ByVal wCmd As Long) As Long
 
 Public Function EnumWindowsProc(ByVal hwnd As Long, ByVal lParam As Long) As Boolean
-    Dim S As String
-    Dim a As Long
-    Dim v As Long
-    S = String$(80, 0)
-    Call GetWindowText(hwnd, S, 80)
-    S = Left$(S, InStr(S, Chr$(0)) - 1)
+    '窗口的标题
+    Dim Title As String
+    '可见性，如果窗口不可见，则返回0
+    Dim VisiableState As Long
+    '窗口的层级，如果窗口有父窗口，则返回值非零，这里我们只需要顶级窗口的，所以当窗口是0（即窗口自身就是父窗口）才显示窗口名
+    Dim LevelState As Long
+    '给它提供初始值
+    Title = String(80, 0)
+    Call GetWindowText(hwnd, Title, 80)
+    Title = Left(Title, InStr(Title, Chr$(0)) - 1)
 
-    v = GetWindow(hwnd, GW_OWNER)
-    a = IsWindowVisible(hwnd)
-    If Len(S) > 0 And a <> 0 And v = 0 Then
-        Form1.List1.AddItem S
+    LevelState = GetWindow(hwnd, GW_OWNER)
+    VisiableState = IsWindowVisible(hwnd)
+    If Len(Title) > 0 And VisiableState <> 0 And LevelState = 0 Then
+        Form1.List1.AddItem Title
     End If
     EnumWindowsProc = True
 End Function
