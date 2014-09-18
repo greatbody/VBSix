@@ -149,13 +149,28 @@ End Function
 Function TransKeyString(ByVal strKey As String, ByRef org() As Byte)
     org = strKey
 End Function
+'判断数值是否为整数
+Public Function IsZs(ByVal number As Variant) As Boolean
+    Dim intNum As Integer
+    If IsNumeric(number) Then
+        intNum = Int(number)
+        If number - intNum = 0 Then
+            IsZs = True
+        Else
+            IsZs = False
+        End If
+    Else
+        IsZs = False
+    End If
+End Function
+
 '将内容字节数组大小调整为秘钥长度的整数倍
-'2014年9月18日08:53:16 孙瑞调整
+'2014年9月18日08:53:16 孙瑞调整完成
 Function ReArrange(ByRef contentByte() As Byte, ByVal keylen As Long) As Long
     Dim t As Single
     Dim targetSize As Long
     t = (UBound(contentByte) + 1) / (keylen)
-    If cint() Then
+    If IsZs(t) = True Then
         '整数
         Exit Function
     Else
