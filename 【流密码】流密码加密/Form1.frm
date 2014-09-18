@@ -114,18 +114,19 @@ Dim codeByte() As Byte '待加密序列
 '3.use it as a seed to creat a codeByte
 '4.combine then to creat a string
 '创建一个函数，将源字节流处理后得到一组秘钥
-Function CreatKey(ByRef source() As Byte) As Byte()
+Function CreateKey(ByRef source() As Byte) As Byte()
     Dim r() As Byte
     Dim i As Long, bLength As Long
     Dim tFloat As Single
-    bLength = UBound(source)
+    Dim Seed As Byte
+    Seed = source(0)
+    bLength = UBound(source)    'The Max Index Of Key Binary Code
     ReDim r(bLength)
     For i = 0 To bLength
         tFloat = source(i) / 255
-        Randomize
-        r(i) = CByte(Rnd(tFloat) * 255)
+        r(i) = ""
     Next i
-    CreatKey = r
+    CreateKey = r
 End Function
 
 '将生成的key与source异或编码【代码有问题！】
@@ -228,7 +229,7 @@ Private Sub Command1_Click()
     '循环提取数据
     For i = 1 To contentlen / keylen
         GetSection countByte, tempByte, (i - 1) * keylen, keylen
-        keyByte = CreatKey(keyByte)
+        keyByte = CreateKey(keyByte)
         tempByte = XorGroup(tempByte, keyByte)
         SaveToSection countByte, tempByte, (i - 1) * keylen
     Next i
