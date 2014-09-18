@@ -144,25 +144,18 @@ Function XorGroup(ByRef source() As Byte, ByRef key() As Byte) As Byte()
     Next i
     XorGroup = r
 End Function
-
-Function TransKeyString(ByVal s As String, ByRef org() As Byte)
-    Dim i As Long
-    If LenB(s) = 0 Then
-        ReDim org(0)
-        org(0) = 0
-        Exit Function
-    End If
-    ReDim org(LenB(s) - 1)
-    For i = 1 To LenB(s)
-        org(i - 1) = AscB(MidB(s, i, 1))
-    Next i
+'将字符密码替换为字节密码，填充到字节数组
+'2014年9月18日08:50:00 孙瑞修改，大改
+Function TransKeyString(ByVal strKey As String, ByRef org() As Byte)
+    org = strKey
 End Function
-
+'将内容字节数组大小调整为秘钥长度的整数倍
+'2014年9月18日08:53:16 孙瑞调整
 Function ReArrange(ByRef contentByte() As Byte, ByVal keylen As Long) As Long
     Dim t As Single
     Dim targetSize As Long
     t = (UBound(contentByte) + 1) / (keylen)
-    If t = CSng(Int(t)) Then
+    If cint() Then
         '整数
         Exit Function
     Else
@@ -201,7 +194,7 @@ Private Sub Command1_Click()
     '定义变量区
     Dim sourStr As String
     Dim showStr As String
-    Dim keyStr As String
+    Dim KeyStr As String
     Dim keyByte() As Byte
     Dim countByte() As Byte
     Dim tempByte() As Byte
@@ -212,8 +205,8 @@ Private Sub Command1_Click()
     '代码区
 
     sourStr = SourceText.Text       '原始文本
-    keyStr = KeyText.Text           '密码文本
-    TransKeyString keyStr, keyByte  '将字符密码替换成字节密码【字符密码初值】
+    KeyStr = KeyText.Text           '密码文本
+    TransKeyString KeyStr, keyByte  '将字符密码替换成字节密码【字符密码初值】
     keylen = UBound(keyByte) + 1    '密码字节数组长度
     countByte = sourStr '获取待加密内容的字节数据
     
@@ -247,7 +240,7 @@ Private Sub Command2_Click()
     Dim sourStr As String
     Dim midStr() As String
     Dim showStr As String
-    Dim keyStr As String
+    Dim KeyStr As String
     Dim keyByte() As Byte
     Dim countByte() As Byte
     Dim tempByte() As Byte
@@ -264,8 +257,8 @@ Private Sub Command2_Click()
     Call GetBytes(countByte, midStr)
     Debug.Print ShowBytes(countByte) '到这一步都没问题
     '*************
-    keyStr = KeyText.Text           '密码文本
-    TransKeyString keyStr, keyByte  '将字符密码替换成字节密码【字符密码初值】
+    KeyStr = KeyText.Text           '密码文本
+    TransKeyString KeyStr, keyByte  '将字符密码替换成字节密码【字符密码初值】
     keylen = UBound(keyByte) + 1    '密码字节数组长度
     Debug.Print "调整前数组长度：" & UBound(countByte) + 1
     ReArrange countByte, keylen '数据重整
