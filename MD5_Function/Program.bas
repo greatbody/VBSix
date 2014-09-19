@@ -42,15 +42,18 @@ Public Sub Main()
     'intNum = Int(Console.ReadLine("请输入数值:"))
     'intUnit = Int(Console.ReadLine("请输入单位数值:"))
     'Console.WriteLine "比数值 " & intNum & " 大 " & CalcMiss(intNum, intUnit) & " 为 " & intUnit & " 的倍数"
-    Console.WriteLine "abcdef roll left 7:=>" & ShiftStr("abcdef", 7, RollLeft, True)
-    Console.WriteLine "abcdef roll left 3:=>" & ShiftStr("abcdef", 3, RollLeft, True)
-    Console.WriteLine "abcdef move left 7:=>" & ShiftStr("abcdef", 7, RollLeft, False)
-    Console.WriteLine "abcdef move left 3:=>" & ShiftStr("abcdef", 3, RollLeft, False)
-    
-    Console.WriteLine "abcdef roll right 7:=>" & ShiftStr("abcdef", 7, RollRight, True)
-    Console.WriteLine "abcdef roll right 3:=>" & ShiftStr("abcdef", 3, RollRight, True)
-    Console.WriteLine "abcdef move right 7:=>" & ShiftStr("abcdef", 7, RollRight, False)
-    Console.WriteLine "abcdef move right 3:=>" & ShiftStr("abcdef", 3, RollRight, False)
+    '【验证字符串滚动函数】
+        'Console.WriteLine("abcdef roll left 7:=>" & ShiftStr("abcdef", 7, RollLeft, True))
+        'Console.WriteLine("abcdef roll left 3:=>" & ShiftStr("abcdef", 3, RollLeft, True))
+        'Console.WriteLine("abcdef move left 7:=>" & ShiftStr("abcdef", 7, RollLeft, False))
+        'Console.WriteLine("abcdef move left 3:=>" & ShiftStr("abcdef", 3, RollLeft, False))
+
+        'Console.WriteLine("abcdef roll right 7:=>" & ShiftStr("abcdef", 7, RollRight, True))
+        'Console.WriteLine("abcdef roll right 3:=>" & ShiftStr("abcdef", 3, RollRight, True))
+        'Console.WriteLine("abcdef move right 7:=>" & ShiftStr("abcdef", 7, RollRight, False))
+        'Console.WriteLine("abcdef move right 3:=>" & ShiftStr("abcdef", 3, RollRight, False))
+    '【验证字节转二进制文字】
+    'Console.WriteLine "&H13:" & ByteToString(&HAF)
     '--------------------------------------------------------------------------
     #If VB_DEBUG Then
         Console.WriteText "Press any key to continue..."

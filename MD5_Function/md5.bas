@@ -117,7 +117,9 @@ Function ShowBytes(ByRef SourceBytes() As Byte) As String
 End Function
 
 
-
+'将字节转换为二进制形式的字符串
+'创建时：2014年9月19日13:35:36
+'创建人：孙瑞
 Public Function ByteToString(ByVal inByte As Byte) As String
     Dim BinStr As String
     Dim i As Integer
