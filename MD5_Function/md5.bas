@@ -79,26 +79,7 @@ Public Function ValueIn(ByVal value As Long, ByVal lngMin As Long, ByVal lngMax 
 End Function
 
 Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal IsLoop As Boolean) As Byte
-    Dim tmpByte As Byte
-    Dim bitsHigh As Byte, bitsLow As Byte
-    Dim ActureSteps As Byte
-    ActureSteps = steps Mod 8 '实际需要移动位数
-
     
-    bitsHigh = inByte \ 256
-    bitsLow = inByte Mod 256
-    If IsLoop = False Then
-        '如果非循环移位
-        If steps >= 8 Then
-            '一个字节向左移动8位就是00H了
-            BitLeft = &H0
-            Exit Function
-        End If
-        tmpByte = inByte And &H7F
-        tmpByte = tmpByte * 2 ^ steps
-    Else
-        '如果是循环移位
-    End If
 End Function
 
 '字节数组转十六进制字符串
@@ -181,4 +162,28 @@ Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVa
             End If
         End If
     End If
+End Function
+'字符串数组转Byte
+'创建时：2014年9月19日14:02:00
+'创建人：孙瑞
+Public Function StrToByte(ByVal strBin As String) As Byte
+    Dim i As Integer
+    Dim intStrLen As Integer
+    Dim byteRet As Byte
+    intStrLen = Len(strBin)
+    byteRet = 0
+    If intStrLen > 8 Then
+        Err.Raise 113, , "字符串位数长度超过8位"
+    End If
+    For i = 1 To intStrLen
+        If Mid(strBin, i, 1) = "1" Or Mid(strBin, i, 1) = "0" Then
+        
+        Else
+            Err.Raise 114, , "字符串不是有效二进制类型"
+        End If
+    Next i
+    For i = 1 To intStrLen
+        byteRet = byteRet + 2 ^ (i - 1) * Int(Mid(strBin, intStrLen - i + 1, 1))
+    Next i
+    StrToByte = byteRet
 End Function

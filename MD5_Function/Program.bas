@@ -55,10 +55,12 @@ Public Sub Main()
     '【验证字节转二进制文字】
     'Console.WriteLine "&H13:" & ByteToString(&HAF)
     '【验证字节数组转十六进制字符串】
-    Dim k(1) As Byte
-    k(0) = &H52
-    k(1) = &HBE
-    Console.WriteLine "&H52 &HBE ->" & ShowBytes(k)
+        'Dim k(1) As Byte
+        'k(0) = &H52
+        'k(1) = &HBE
+        'Console.WriteLine("&H52 &HBE ->" & ShowBytes(k))
+    '【验证字符串数组转int】
+    Console.WriteLine "1101->" & StrToByte("1101")
     '--------------------------------------------------------------------------
     #If VB_DEBUG Then
         Console.WriteText "Press any key to continue..."
