@@ -2,8 +2,8 @@ Attribute VB_Name = "md5"
 Option Explicit
 
 Public Enum Direction
-    Left = 1
-    Right = 2
+    RollLeft = 1
+    RollRight = 2
 End Enum
 '将二进制序列，填充到符合MD5要求
 Public Function FillBin(ByRef source() As Byte) As Byte()
@@ -78,7 +78,7 @@ Public Function ValueIn(ByVal value As Long, ByVal lngMin As Long, ByVal lngMax 
     End If
 End Function
 
-Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal isLoop As Boolean) As Byte
+Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal IsLoop As Boolean) As Byte
     Dim tmpByte As Byte
     Dim bitsHigh As Byte, bitsLow As Byte
     Dim ActureSteps As Byte
@@ -87,7 +87,7 @@ Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal isLo
     
     bitsHigh = inByte \ 256
     bitsLow = inByte Mod 256
-    If isLoop = False Then
+    If IsLoop = False Then
         '如果非循环移位
         If steps >= 8 Then
             '一个字节向左移动8位就是00H了
@@ -130,14 +130,50 @@ Public Function ByteToString(ByVal inByte As Byte) As String
     Next i
     ByteToString = BinStr
 End Function
-
-Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVal intDirection As Direction) As String
-    If intDirection = Direction.Left Then
+'将字符串按照给定滚动字数，方向，是否轮回滚动等选项进行滚动，输出滚动后的结果。
+'创建时：2014年9月19日13:29:33
+'创建者：孙瑞
+Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVal intDirection As Direction, ByVal IsLoop As Boolean) As String
+    Dim strRet As String
+    Dim absSteps As Long
+    Dim lngStrLen As Long
+    
+    lngStrLen = Len(strSource)
+    absSteps = lngSteps Mod lngStrLen
+    
+    If intDirection = Direction.RollLeft Then
         '向左移
-    ElseIf intDirection = Direction.Right Then
+        If IsLoop Then
+            strRet = Mid(strSource, absSteps + 1) & Mid(strSource, 1, absSteps)
+            ShiftStr = strRet
+            Exit Function
+        Else
+            If lngSteps >= lngStrLen Then
+                strRet = String(lngStrLen, " ")
+                ShiftStr = strRet
+                Exit Function
+            Else
+                strRet = Mid(strSource, absSteps + 1) + String(absSteps, " ")
+                ShiftStr = strRet
+                Exit Function
+            End If
+        End If
+    ElseIf intDirection = Direction.RollRight Then
         '向右移
+        If IsLoop Then
+            strRet = Mid(strSource, lngStrLen - absSteps + 1) & Mid(strSource, 1, lngStrLen - absSteps)
+            ShiftStr = strRet
+            Exit Function
+        Else
+            If lngSteps >= lngStrLen Then
+                strRet = String(lngStrLen, " ")
+                ShiftStr = strRet
+                Exit Function
+            Else
+                strRet = String(absSteps, " ") & Mid(strSource, 1, lngStrLen - absSteps)
+                ShiftStr = strRet
+                Exit Function
+            End If
+        End If
     End If
 End Function
-
-End If
-
