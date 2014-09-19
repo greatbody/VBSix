@@ -101,13 +101,16 @@ Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal IsLo
     End If
 End Function
 
+'字节数组转十六进制字符串
+'创建时：2014年9月19日13:41:07
+'创建人：孙瑞
 Function ShowBytes(ByRef SourceBytes() As Byte) As String
     Dim strOut As String
     Dim strTmp As String
     Dim i As Long
     For i = 0 To UBound(SourceBytes)
+        strTmp = Hex(SourceBytes(i))
         If strOut = "" Then
-            strTmp = Hex(SourceBytes(i))
             strOut = strOut & IIf(Len(strTmp) > 1, strTmp, "0" & strTmp)
         Else
             strOut = strOut & " " & IIf(Len(strTmp) > 1, strTmp, "0" & strTmp)

@@ -54,6 +54,11 @@ Public Sub Main()
         'Console.WriteLine("abcdef move right 3:=>" & ShiftStr("abcdef", 3, RollRight, False))
     '【验证字节转二进制文字】
     'Console.WriteLine "&H13:" & ByteToString(&HAF)
+    '【验证字节数组转十六进制字符串】
+    Dim k(1) As Byte
+    k(0) = &H52
+    k(1) = &HBE
+    Console.WriteLine "&H52 &HBE ->" & ShowBytes(k)
     '--------------------------------------------------------------------------
     #If VB_DEBUG Then
         Console.WriteText "Press any key to continue..."
