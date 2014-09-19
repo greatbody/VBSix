@@ -39,9 +39,10 @@ Public Sub Main()
     Dim intNum As Integer, intUnit As Integer
     'TODO: 在此编辑代码
     Console.WriteLine "Hello, Welcome to the world of Visual Basic"
-    intNum = Int(Console.ReadLine("请输入数值:"))
-    intUnit = Int(Console.ReadLine("请输入单位数值:"))
-    Console.WriteLine "比数值 " & intNum & " 大 " & CalcMiss(intNum, intUnit) & " 为 " & intUnit & " 的倍数"
+    'intNum = Int(Console.ReadLine("请输入数值:"))
+    'intUnit = Int(Console.ReadLine("请输入单位数值:"))
+    'Console.WriteLine "比数值 " & intNum & " 大 " & CalcMiss(intNum, intUnit) & " 为 " & intUnit & " 的倍数"
+    Console.WriteLine "7F*2=" & ByteToString(&H7F)
     
     
     
