@@ -79,7 +79,11 @@ Public Function ValueIn(ByVal value As Long, ByVal lngMin As Long, ByVal lngMax 
 End Function
 
 Public Function BitLeft(ByVal inByte As Byte, ByVal steps As Integer, ByVal IsLoop As Boolean) As Byte
-    
+    Dim strBin As String
+    strBin = ByteToStr(inByte)
+    strBin = ShiftStr(strBin, steps, RollLeft, IsLoop)
+    inByte = StrToByte(strBin)
+    BitLeft = inByte
 End Function
 
 '字节数组转十六进制字符串
@@ -104,7 +108,7 @@ End Function
 '将字节转换为二进制形式的字符串
 '创建时：2014年9月19日13:35:36
 '创建人：孙瑞
-Public Function ByteToString(ByVal inByte As Byte) As String
+Public Function ByteToStr(ByVal inByte As Byte) As String
     Dim BinStr As String
     Dim i As Integer
     For i = 7 To 0 Step -1
@@ -114,12 +118,12 @@ Public Function ByteToString(ByVal inByte As Byte) As String
             BinStr = BinStr & "0"
         End If
     Next i
-    ByteToString = BinStr
+    ByteToStr = BinStr
 End Function
 '将字符串按照给定滚动字数，方向，是否轮回滚动等选项进行滚动，输出滚动后的结果。
 '创建时：2014年9月19日13:29:33
 '创建者：孙瑞
-Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVal intDirection As Direction, ByVal IsLoop As Boolean) As String
+Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVal intDirection As Direction, ByVal IsLoop As Boolean, Optional ByVal AutoInsert As String = "0") As String
     Dim strRet As String
     Dim absSteps As Long
     Dim lngStrLen As Long
@@ -135,11 +139,11 @@ Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVa
             Exit Function
         Else
             If lngSteps >= lngStrLen Then
-                strRet = String(lngStrLen, " ")
+                strRet = String(lngStrLen, AutoInsert)
                 ShiftStr = strRet
                 Exit Function
             Else
-                strRet = Mid(strSource, absSteps + 1) + String(absSteps, " ")
+                strRet = Mid(strSource, absSteps + 1) + String(absSteps, AutoInsert)
                 ShiftStr = strRet
                 Exit Function
             End If
@@ -152,11 +156,11 @@ Public Function ShiftStr(ByVal strSource As String, ByVal lngSteps As Long, ByVa
             Exit Function
         Else
             If lngSteps >= lngStrLen Then
-                strRet = String(lngStrLen, " ")
+                strRet = String(lngStrLen, AutoInsert)
                 ShiftStr = strRet
                 Exit Function
             Else
-                strRet = String(absSteps, " ") & Mid(strSource, 1, lngStrLen - absSteps)
+                strRet = String(absSteps, AutoInsert) & Mid(strSource, 1, lngStrLen - absSteps)
                 ShiftStr = strRet
                 Exit Function
             End If
@@ -187,3 +191,15 @@ Public Function StrToByte(ByVal strBin As String) As Byte
     Next i
     StrToByte = byteRet
 End Function
+'计算两数求余的值，并且返回正数余数
+'创建时：2014年9月20日22:46:35
+'创建人：孙瑞
+Public Function MyMod(ByVal intValue As Integer, ByVal intMod As Integer) As Integer
+    If intValue >= 0 Then
+        MyMod = intValue Mod intMod
+    Else
+        MyMod = (intValue Mod intMod) + intMod
+    End If
+End Function
+
+

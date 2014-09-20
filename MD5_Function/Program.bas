@@ -60,7 +60,13 @@ Public Sub Main()
         'k(1) = &HBE
         'Console.WriteLine("&H52 &HBE ->" & ShowBytes(k))
     '【验证字符串数组转int】
-    Console.WriteLine "1101->" & StrToByte("1101")
+    'Console.WriteLine "1101->" & StrToByte("1101")
+    '[varify binary shift]
+    Const TEST_BYTE = &H10
+    'Console.WriteLine "before shift:" & ByteToStr(TEST_BYTE)
+    'Console.WriteLine "shift right:" & BitLeft(TEST_BYTE, -1, False)
+    'Console.WriteLine "they are " & ByteToStr(BitLeft(TEST_BYTE, -1, False))
+    Console.WriteLine "-1 mod 8:" & MyMod(-1, 8)
     '--------------------------------------------------------------------------
     #If VB_DEBUG Then
         Console.WriteText "Press any key to continue..."
