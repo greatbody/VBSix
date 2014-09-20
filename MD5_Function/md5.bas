@@ -8,7 +8,7 @@ End Enum
 '将二进制序列，填充到符合MD5要求
 Public Function FillBin(ByRef source() As Byte) As Byte()
     Dim lngCodeLen As Long
-    lngCodeLen = UBound(source) + 1 '获取当前的长度
+    lngCodeLen = UBound(source) + 1 '获取当前的长度（字节）
     
 End Function
 '计算一个数字距离某个数字的倍数还差多少
